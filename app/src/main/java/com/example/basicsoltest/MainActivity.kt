@@ -33,12 +33,12 @@ class MainActivity : AppCompatActivity() {
         dispTextView = findViewById(R.id.dispValue)
         editTextNumber = findViewById(R.id.editTextNumber)
 
-        val contractAddress = "CONTRACT_ADDRESS"
-        val url = "URL_COMPLETE_ADDRESS"
+        val contractAddress = "0x90f0F78760464C6731589D044f810376548F7AC7"
+        val url = "https://kovan.infura.io/v3/1c7c239803794c23bd60fe236a89995a"
         val web3j = Web3jFactory.build(InfuraHttpService(url))
         val gasLimit: BigInteger = BigInteger.valueOf(20_000_000_000L) //change this as required
         val gasPrice: BigInteger = BigInteger.valueOf(4300000) // this value also
-        val credentials = Credentials.create("YOUR_PRIVATE_KEY")
+        val credentials = Credentials.create("87f153f4484082c9bbdf8014390ccfe34e7e0a0b2f889033e04da46b4574a086")
 
         simpleContract  = SimpleContract.load(contractAddress, web3j, credentials, gasLimit, gasPrice)
 
