@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         sendButton.setOnClickListener {
             val string : String = editTextNumber.text.toString()
             if(string != ""){
-                GlobalScope.launch(Dispatchers.Main) {
+                GlobalScope.launch(Dispatchers.IO) {
                     sendAndRetrieveData(string.toBigInteger())
                 }
             }
@@ -57,8 +57,6 @@ class MainActivity : AppCompatActivity() {
         val job = GlobalScope.launch(Dispatchers.Default) {
             // write to contract
             val transactionReceipt: Future<TransactionReceipt>? = simpleContract.set(num).sendAsync()
-            val result = "Successful transaction. Gas used: ${transactionReceipt?.get()?.blockNumber}  ${transactionReceipt?.get()?.gasUsed}"
-            Log.i("##SUCCESS_WRITE_DATA##", result)
 
             // read from contract
             val getValue: Future<BigInteger>? = simpleContract.get().sendAsync()
