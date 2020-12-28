@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         dispTextView = findViewById(R.id.dispValue)
         editTextNumber = findViewById(R.id.editTextNumber)
 
-        val contractAddress = "0x90f0F78760464C6731589D044f810376548F7AC7"
+        val contractAddress = "0x19Ec6403f536CC101c2C7C89d4Aef25147D085f3"
         val url = "https://kovan.infura.io/v3/1c7c239803794c23bd60fe236a89995a"
         val web3j = Web3jFactory.build(InfuraHttpService(url))
         val gasLimit: BigInteger = BigInteger.valueOf(20_000_000_000L) //change this as required
