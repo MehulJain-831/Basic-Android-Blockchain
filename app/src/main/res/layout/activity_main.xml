@@ -28,14 +28,15 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextNumber"
+            android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="28dp"
             android:ems="10"
             android:hint="@string/send_hint"
-            android:inputType="number"
-            android:autofillHints="10" />
+            android:inputType="text"
+            android:autofillHints="10"
+            tools:ignore="TextFields" />
 
         <Button
             android:id="@+id/send"

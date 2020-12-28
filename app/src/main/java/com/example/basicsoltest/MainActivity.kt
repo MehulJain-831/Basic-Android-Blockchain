@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sendButton : Button
     private lateinit var dispTextView: TextView
-    private lateinit var editTextNumber : EditText
+    private lateinit var editText : EditText
     private lateinit var simpleContract: SimpleContract
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity() {
 
         sendButton = findViewById(R.id.send)
         dispTextView = findViewById(R.id.dispValue)
-        editTextNumber = findViewById(R.id.editTextNumber)
+        editText = findViewById(R.id.editText)
 
         val contractAddress = "0x19Ec6403f536CC101c2C7C89d4Aef25147D085f3"
-        val url = "https://kovan.infura.io/v3/1c7c239803794c23bd60fe236a89995a"
+        val url = "https://kovan.infura.io/v3/c419d20f1b064478bcfe5921e4b72142"
         val web3j = Web3jFactory.build(InfuraHttpService(url))
         val gasLimit: BigInteger = BigInteger.valueOf(20_000_000_000L) //change this as required
         val gasPrice: BigInteger = BigInteger.valueOf(4300000) // this value also
@@ -43,24 +43,26 @@ class MainActivity : AppCompatActivity() {
         simpleContract  = SimpleContract.load(contractAddress, web3j, credentials, gasLimit, gasPrice)
 
         sendButton.setOnClickListener {
-            val string : String = editTextNumber.text.toString()
+            val string : String = editText.text.toString()
             if(string != ""){
                 GlobalScope.launch(Dispatchers.IO) {
-                    sendAndRetrieveData(string.toBigInteger())
+                    sendAndRetrieveData(string)
                 }
             }
 
         }
     }
 
-    private suspend fun sendAndRetrieveData(num : BigInteger) {
+    private suspend fun sendAndRetrieveData(text : String) {
         val job = GlobalScope.launch(Dispatchers.Default) {
             // write to contract
-            val transactionReceipt: Future<TransactionReceipt>? = simpleContract.set(num).sendAsync()
+            val transactionReceipt: Future<TransactionReceipt>? = simpleContract.set(text).sendAsync()
+//            val result = "Successful transaction. Gas used: ${transactionReceipt?.get()?.blockNumber}  ${transactionReceipt?.get()?.gasUsed}"
+//            Log.i("##SUCCESS_WRITE_DATA##", result)
 
             // read from contract
-            val getValue: Future<BigInteger>? = simpleContract.get().sendAsync()
-            val convertToString: BigInteger? = getValue?.get()
+            val getValue: Future<String>? = simpleContract.get().sendAsync()
+            val convertToString: String? = getValue?.get()
             Log.i("##SUCCESS_READ_DATA##", "contract value returned: $convertToString")
 
             // returned value displayed to text view in Main Thread
