@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
         val contractAddress = "0x19Ec6403f536CC101c2C7C89d4Aef25147D085f3"
         val url = "https://kovan.infura.io/v3/c419d20f1b064478bcfe5921e4b72142"
         val web3j = Web3jFactory.build(InfuraHttpService(url))
-        val gasLimit: BigInteger = BigInteger.valueOf(20_000_000_000L) //change this as required
-        val gasPrice: BigInteger = BigInteger.valueOf(4300000) // this value also
+        val gasLimit: BigInteger = BigInteger.valueOf(430) //change this as required
+        val gasPrice: BigInteger = BigInteger.valueOf(210) // this value also
         val credentials = Credentials.create("87f153f4484082c9bbdf8014390ccfe34e7e0a0b2f889033e04da46b4574a086")
 
         simpleContract  = SimpleContract.load(contractAddress, web3j, credentials, gasLimit, gasPrice)
@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
         val job = GlobalScope.launch(Dispatchers.Default) {
             // write to contract
             val transactionReceipt: Future<TransactionReceipt>? = simpleContract.set(text).sendAsync()
-//            val result = "Successful transaction. Gas used: ${transactionReceipt?.get()?.blockNumber}  ${transactionReceipt?.get()?.gasUsed}"
-//            Log.i("##SUCCESS_WRITE_DATA##", result)
+            val result = "Successful transaction. Gas used: ${transactionReceipt?.get()?.blockNumber}  ${transactionReceipt?.get()?.gasUsed}"
+            Log.i("##SUCCESS_WRITE_DATA##", result)
 
             // read from contract
             val getValue: Future<String>? = simpleContract.get().sendAsync()
