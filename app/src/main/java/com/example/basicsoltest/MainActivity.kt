@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sendButton : Button
     private lateinit var dispTextView: TextView
     private lateinit var editText : EditText
-    private lateinit var simpleContract: SimpleContract
+    private lateinit var simpleContract: BasicString
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val gasPrice: BigInteger = BigInteger.valueOf(210) // this value also
         val credentials = Credentials.create("87f153f4484082c9bbdf8014390ccfe34e7e0a0b2f889033e04da46b4574a086")
 
-        simpleContract  = SimpleContract.load(contractAddress, web3j, credentials, gasLimit, gasPrice)
+        simpleContract  = BasicString.load(contractAddress, web3j, credentials, gasLimit, gasPrice)
 
         sendButton.setOnClickListener {
             val string : String = editText.text.toString()
@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
         val job = GlobalScope.launch(Dispatchers.Default) {
             // write to contract
             val transactionReceipt: Future<TransactionReceipt>? = simpleContract.set(text).sendAsync()
-            val result = "Successful transaction. Gas used: ${transactionReceipt?.get()?.blockNumber}  ${transactionReceipt?.get()?.gasUsed}"
-            Log.i("##SUCCESS_WRITE_DATA##", result)
+//            val result = "Successful transaction. Gas used: ${transactionReceipt?.get()?.blockNumber}  ${transactionReceipt?.get()?.gasUsed}"
+//            Log.i("##SUCCESS_WRITE_DATA##", result)
 
             // read from contract
             val getValue: Future<String>? = simpleContract.get().sendAsync()
